@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.optimize
 from   astropy.modeling import models, fitting
-from   scipy.stats import norm
+from   scipy.stats import norm,stats
 
 plt.clf()
 f, (ax1, ax2, ax3, ax4) = plt.subplots(4, sharex=True, sharey=True)
@@ -13,7 +13,11 @@ f, (ax1, ax2, ax3, ax4) = plt.subplots(4, sharex=True, sharey=True)
 fluxes           = np.loadtxt("fluxes.dat")
 
 # - make statistics p-value test 
-scipy.stats.mstats.normaltest(fluxes)
+ptest  = scipy.stats.mstats.normaltest(fluxes)
+kstest = stats.kstest(fluxes, 'norm')
+
+print(ptest)
+print(kstest)
 
 ## Following  http://stackoverflow.com/questions/7805552/fitting-a-histogram-with-python  
 
@@ -60,6 +64,15 @@ ax4.legend(loc=7, borderaxespad=0.)
 
 
 # - make statistics p-value test again to the masked fluxes array
-scipy.stats.mstats.normaltest(fluxes)
+ptest  = scipy.stats.mstats.normaltest(fluxes)
+kstest = stats.kstest(fluxes, 'norm')
+
+print(ptest)
+print(kstest)
+
+
+####### KS test D-statistics table:  www.mathematik.uni-kl.de/~schwaar/Exercises/Tabellen/table_kolmogorov.pdf
+## - p value less than 0.1, can not assume normal distribution
+
 
 plt.savefig('test_hist_Gaussian_fit.pdf')
