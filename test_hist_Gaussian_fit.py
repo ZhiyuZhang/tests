@@ -46,7 +46,7 @@ bins             = np.linspace(0, 1, 40)
 y                = norm.pdf( bins, mu, sigma)
 n, bins, patches = ax3.hist(fluxes, bins, normed=1, facecolor='green', alpha=0.75)
 l                = ax3.plot(bins, y, 'r--', linewidth=2, label='stats.norm.pdf')
-plt.legend( loc=7, borderaxespad=0.)
+ax3.legend( loc=7, borderaxespad=0.)
 
 
 
@@ -57,8 +57,8 @@ bins             = np.linspace(0, 1, 40)
 (mu, sigma)      = norm.fit(fluxes)
 y                = norm.pdf( bins, mu, sigma)
 n, bins, patches = ax4.hist(fluxes, bins, normed=1, facecolor='green', alpha=0.75)
-l                = ax4.plot(bins, y, 'r--', linewidth=2, label='stats.norm.pdf-flag')
-plt.legend(loc=7, borderaxespad=0.)
+l                = ax4.plot(bins, y, 'r--', linewidth=2, label='stats.norm.pdf-mask')
+ax4.legend(loc=7, borderaxespad=0.)
 
 
 plt.savefig('test_hist_Gaussian_fit.pdf')
