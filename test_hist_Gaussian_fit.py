@@ -10,7 +10,7 @@ from   scipy.stats import norm
 
 
 plt.clf()
-f, (ax1, ax2, ax3) = plt.subplots(3, sharex=True, sharey=True)
+f, (ax1, ax2, ax3, ax4) = plt.subplots(4, sharex=True, sharey=True)
 
 ## load data 
 fluxes           = np.loadtxt("fluxes.dat")
@@ -28,7 +28,6 @@ ax1.legend( loc=7, borderaxespad=0.)
 ## Make personal  Gaussian fitting 
 
 bins             = np.linspace(0, 1, 40)
-n, bins, patches = plt.hist(fluxes, bins, normed=1, facecolor='green', alpha=0.75)
 (mu, sigma)      = norm.fit(fluxes)
 x                = (bins+0.015)[0:(40-1)]
 g_init           = models.Gaussian1D(amplitude=1, mean=0.3, stddev=0.1)   ##
@@ -43,12 +42,24 @@ ax2.legend( loc=7, borderaxespad=0.)
 ## use stats.normalpdf  
 
 bins             = np.linspace(0, 1, 40)
-n, bins, patches = plt.hist(fluxes, bins, normed=1, facecolor='green', alpha=0.75)
 (mu, sigma)      = norm.fit(fluxes)
 y                = norm.pdf( bins, mu, sigma)
 n, bins, patches = ax3.hist(fluxes, bins, normed=1, facecolor='green', alpha=0.75)
-l                = ax3.plot(bins, y, 'r--', linewidth=2,label='stats.norm.pdf')
+l                = ax3.plot(bins, y, 'r--', linewidth=2, label='stats.norm.pdf')
 plt.legend( loc=7, borderaxespad=0.)
+
+
+
+## use stats.normalpdf  
+
+fluxes           = fluxes[np.where(fluxes < 0.6)] 
+bins             = np.linspace(0, 1, 40)
+(mu, sigma)      = norm.fit(fluxes)
+y                = norm.pdf( bins, mu, sigma)
+n, bins, patches = ax4.hist(fluxes, bins, normed=1, facecolor='green', alpha=0.75)
+l                = ax4.plot(bins, y, 'r--', linewidth=2, label='stats.norm.pdf-flag')
+plt.legend(loc=7, borderaxespad=0.)
+
 
 plt.savefig('test_hist_Gaussian_fit.pdf')
 
